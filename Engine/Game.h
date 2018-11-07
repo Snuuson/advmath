@@ -23,6 +23,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "Cell.h"
+#include "DrawableCell.h"
 
 class Game
 {
@@ -40,6 +42,8 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
+	Cell cell0;
+	
 	/********************************/
 	/*  User Variables              */
 	/********************************/

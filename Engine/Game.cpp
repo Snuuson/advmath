@@ -42,4 +42,22 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	DrawableCell dc = cell0.GetDrawableCell();
+	DrawableCell dc1 = cell0.GetDrawableCell();
+	DrawableCell dc2 = cell0.GetDrawableCell();
+	DrawableCell dc3 = cell0.GetDrawableCell();
+	dc.Translate(Vec2(1*cell0.size, 1 * cell0.size));
+	dc1.Translate(Vec2(2 * cell0.size, 2 * cell0.size));
+	dc2.Translate(Vec2(3 * cell0.size, 3 * cell0.size));
+	dc3.Translate(Vec2(4 * cell0.size, 4 * cell0.size));
+	int scale = 2;
+	dc.Scale(scale);
+	dc1.Scale(scale);
+	dc2.Scale(scale);
+	dc3.Scale(scale);
+	dc.Render(gfx);
+	dc1.Render(gfx);
+	dc2.Render(gfx);
+	dc3.Render(gfx);
+	
 }
