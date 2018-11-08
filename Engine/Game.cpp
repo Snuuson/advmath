@@ -20,19 +20,34 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include <random>
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
 	ct(gfx),
-	cam(ct)
+	cam(ct),
+	camContrl(wnd,cam)
 {
 	cam.Scale(1);
-	for (float i = 0; i < 100; i++) {
-		cell0.MoveBy(Vec2(i,0));
-		allCells.emplace_back(cell0.GetDrawableCell());
+	cam.MoveTo(Vec2(-100, -100));
+	cell1.ChangeColor(Colors::Magenta);
+	for (int i = 0; i < 1000; i++) {
+		movingCells.emplace_back(new Cell({25,25},10));
 	}
+	for each (Cell* c in movingCells)
+	{
+		int min = 0;
+		int max = 255;
+		int r = rand() % (max - min + 1) + min;
+		int g = rand() % (max - min + 1) + min;
+		int b = rand() % (max - min + 1) + min;
+		Color col = Color(r, g, b);
+		c->ChangeColor(col);
+	}
+	
+	
 }
 
 void Game::Go()
@@ -45,11 +60,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	while (wnd.kbd.KeyIsPressed(VK_UP)) {
-		cam.Scale(1.05); break;
-	}
-	while (wnd.kbd.KeyIsPressed(VK_DOWN)) {
-		cam.Scale(0.95); break;
+	camContrl.Update(0.0f);
+	float dt = ft.Mark();
+	for each (Cell* c in movingCells)
+	{
+		c->Update(dt);
 	}
 }
 
@@ -57,42 +72,39 @@ void Game::ComposeFrame()
 {
 
 	//TODO asdsalkdasdksad
-	cell0.MoveTo(Vec2(0, 0));
+	
+	
 	allCells.clear();
-	for (float i = 0; i < 100; i++) {
-		for (float j = 0; j < 100; j++) {
+	movingCellsDrawables.clear();
+	for each (Cell* c in movingCells)
+	{
+		movingCellsDrawables.emplace_back(c->GetDrawableCell());
+	}
+	for (float i = 0; i < 50; i++) {
+		for (float j = 0; j < 50; j++) {
 			cell0.MoveTo(Vec2(i, j));
+			int min = 0;
+			int max = 255;
+			int r = rand() % (max - min + 1) + min;
+			int g = rand() % (max - min + 1) + min;
+			int b = rand() % (max - min + 1) + min;
+			Color c = Color(r, g, b);
+			cell0.ChangeColor(c);
 			allCells.emplace_back(cell0.GetDrawableCell());
 		}
 	}
-	for each (DrawableCell* dc in allCells)
-	{
-		
-		dc->Scale(0.5f);
-	}
 	
-	cam.MoveTo(Vec2(-100,-100));
+	
+	
+	
 	
 	cam.Do(allCells);
+	cam.Do(movingCellsDrawables);
 	
-	DrawableCell* tmp = cell0.GetDrawableCell();
-
-	cell0.MoveTo(Vec2(0,0));
-	tmp = cell0.GetDrawableCell();
-	ct.Do(tmp);
-	cell0.MoveTo(Vec2(0, 1));
-	tmp = cell0.GetDrawableCell();
-	ct.Do(tmp);
-	cell0.MoveTo(Vec2(0, 2));
-	tmp = cell0.GetDrawableCell();
-	ct.Do(tmp);
-	cell0.MoveTo(Vec2(0, 3));
-	tmp = cell0.GetDrawableCell();
-	ct.Do(tmp);
+	
 
 
-
-	gfx.PutPixel(gfx.ScreenWidth / 2, gfx.ScreenHeight/2, Colors::White);
+	//gfx.PutPixel(gfx.ScreenWidth / 2, gfx.ScreenHeight/2, Colors::White);
 
 	
 

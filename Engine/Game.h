@@ -28,6 +28,8 @@
 #include "CoordinateTransformer.h"
 #include <vector>
 #include "Camera.h"
+#include "CameraController.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -49,6 +51,12 @@ private:
 	CoordinateTransformer ct;
 	std::vector<DrawableCell*> allCells;
 	Camera cam;
+	CameraController camContrl;
+	Cell cell1;
+	std::vector<DrawableCell*> movingCellsDrawables;
+	std::vector<Cell*> movingCells;
+	FrameTimer ft;
+
 	
 	/********************************/
 	/*  User Variables              */

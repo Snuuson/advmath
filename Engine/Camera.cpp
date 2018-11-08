@@ -14,8 +14,9 @@ void Camera::MoveBy(Vec2 offset)
 
 void Camera::Scale(float _scale)
 {
-	scale *= _scale;
+	
 	pos *= _scale;
+	scale *= _scale;
 }
 
 Camera::Camera(CoordinateTransformer& ct)
@@ -28,8 +29,9 @@ void Camera::Do(std::vector<DrawableCell*> allCells)
 {
 	for each (DrawableCell* dc in allCells)
 	{
-		dc->Translate(pos);
 		dc->Scale(scale);
+		dc->Translate(pos);
+		
 	}
 	ct.Do(allCells);
 }

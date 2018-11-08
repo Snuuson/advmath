@@ -8,6 +8,13 @@ DrawableCell::DrawableCell(Vec2 _pos, int size)
 {
 }
 
+DrawableCell::DrawableCell(Vec2 _pos, int size, Color c)
+	:
+	rect(new Rect<float>(_pos*(float)size, (float)size, (float)size)),
+	c(c)
+{
+}
+
 void DrawableCell::Scale(float scale_in)
 {
 	scaleX *= scale_in;
@@ -30,6 +37,11 @@ void DrawableCell::Translate(Vec2 pos)
 {
 	translation += pos;
 	
+}
+
+void DrawableCell::ChangeColor(Color c)
+{
+	this->c = c;
 }
 
 

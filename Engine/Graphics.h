@@ -59,7 +59,7 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
-	void FillRect(const Rect<float>& rect);
+	void FillRect(const Rect<float>& rect, Color c);
 	Rect<float> GetScreenRect();
 	~Graphics();
 private:
