@@ -25,8 +25,10 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ct(gfx)
+	ct(gfx),
+	cam(ct)
 {
+	cam.Scale(1);
 	for (float i = 0; i < 100; i++) {
 		cell0.MoveBy(Vec2(i,0));
 		allCells.emplace_back(cell0.GetDrawableCell());
@@ -43,6 +45,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	while (wnd.kbd.KeyIsPressed(VK_UP)) {
+		cam.Scale(1.05); break;
+	}
+	while (wnd.kbd.KeyIsPressed(VK_DOWN)) {
+		cam.Scale(0.95); break;
+	}
 }
 
 void Game::ComposeFrame()
@@ -52,17 +60,20 @@ void Game::ComposeFrame()
 	cell0.MoveTo(Vec2(0, 0));
 	allCells.clear();
 	for (float i = 0; i < 100; i++) {
-		cell0.MoveTo(Vec2(i, 0));
-		allCells.emplace_back(cell0.GetDrawableCell());
+		for (float j = 0; j < 100; j++) {
+			cell0.MoveTo(Vec2(i, j));
+			allCells.emplace_back(cell0.GetDrawableCell());
+		}
 	}
 	for each (DrawableCell* dc in allCells)
 	{
 		
-		dc->ScaleIndependent(4.0f, 4.0);
+		dc->Scale(0.5f);
 	}
 	
+	cam.MoveTo(Vec2(-100,-100));
 	
-		ct.Do(allCells);
+	cam.Do(allCells);
 	
 	DrawableCell* tmp = cell0.GetDrawableCell();
 

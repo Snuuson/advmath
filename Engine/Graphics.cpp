@@ -325,8 +325,8 @@ void Graphics::FillRect(const Rect<float>& _rect)
 	if (rect.right < rect.left) {
 		std::swap(rect.left, rect.right);
 	}
-	for (int y = rect.top; y <= rect.bottom;y++) {
-		for (int x = rect.left; x <= rect.right;x++) {
+	for (int y = (int)round(rect.top); y <= (int)round(rect.bottom);y++) {
+		for (int x = (int)round(rect.left); x <= (int)round(rect.right);x++) {
 			if (x >= 0 && x < ScreenWidth && y >= 0 && y < ScreenHeight)
 				PutPixel(x, y,Colors::Cyan);
 		}

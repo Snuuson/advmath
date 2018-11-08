@@ -27,6 +27,7 @@
 #include "DrawableCell.h"
 #include "CoordinateTransformer.h"
 #include <vector>
+#include "Camera.h"
 
 class Game
 {
@@ -47,6 +48,7 @@ private:
 	Cell cell0;
 	CoordinateTransformer ct;
 	std::vector<DrawableCell*> allCells;
+	Camera cam;
 	
 	/********************************/
 	/*  User Variables              */

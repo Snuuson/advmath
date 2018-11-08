@@ -25,6 +25,7 @@
 #include "ChiliException.h"
 #include "Colors.h"
 #include "Rect.h"
+#include <math.h>
 
 class Graphics
 {
