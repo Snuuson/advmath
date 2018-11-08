@@ -24,8 +24,13 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	ct(gfx)
 {
+	for (float i = 0; i < 100; i++) {
+		cell0.MoveBy(Vec2(i,0));
+		allCells.emplace_back(cell0.GetDrawableCell());
+	}
 }
 
 void Game::Go()
@@ -42,22 +47,60 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	DrawableCell dc = cell0.GetDrawableCell();
-	DrawableCell dc1 = cell0.GetDrawableCell();
-	DrawableCell dc2 = cell0.GetDrawableCell();
-	DrawableCell dc3 = cell0.GetDrawableCell();
-	dc.Translate(Vec2(1*cell0.size, 1 * cell0.size));
-	dc1.Translate(Vec2(2 * cell0.size, 2 * cell0.size));
-	dc2.Translate(Vec2(3 * cell0.size, 3 * cell0.size));
-	dc3.Translate(Vec2(4 * cell0.size, 4 * cell0.size));
-	int scale = 2;
-	dc.Scale(scale);
-	dc1.Scale(scale);
-	dc2.Scale(scale);
-	dc3.Scale(scale);
-	dc.Render(gfx);
-	dc1.Render(gfx);
-	dc2.Render(gfx);
-	dc3.Render(gfx);
+
+	//TODO asdsalkdasdksad
+	cell0.MoveTo(Vec2(0, 0));
+	allCells.clear();
+	for (float i = 0; i < 100; i++) {
+		cell0.MoveTo(Vec2(i, 0));
+		allCells.emplace_back(cell0.GetDrawableCell());
+	}
+	for each (DrawableCell* dc in allCells)
+	{
+		
+		dc->ScaleIndependent(4.0f, 4.0);
+	}
+	
+	
+		ct.Do(allCells);
+	
+	DrawableCell* tmp = cell0.GetDrawableCell();
+
+	cell0.MoveTo(Vec2(0,0));
+	tmp = cell0.GetDrawableCell();
+	ct.Do(tmp);
+	cell0.MoveTo(Vec2(0, 1));
+	tmp = cell0.GetDrawableCell();
+	ct.Do(tmp);
+	cell0.MoveTo(Vec2(0, 2));
+	tmp = cell0.GetDrawableCell();
+	ct.Do(tmp);
+	cell0.MoveTo(Vec2(0, 3));
+	tmp = cell0.GetDrawableCell();
+	ct.Do(tmp);
+
+
+
+	gfx.PutPixel(gfx.ScreenWidth / 2, gfx.ScreenHeight/2, Colors::White);
+
+	
+
+
+	//DrawableCell dc1 = cell0.GetDrawableCell();
+	//DrawableCell dc2 = cell0.GetDrawableCell();
+	//DrawableCell dc3 = cell0.GetDrawableCell();
+	//dc->Translate(Vec2(0*cell0.size, 0 * cell0.size));
+	//dc1.Translate(Vec2(1 * cell0.size,1 * cell0.size));
+	//dc2.Translate(Vec2(2 * cell0.size, 2 * cell0.size));
+	//dc3.Translate(Vec2(3 * cell0.size, 3 * cell0.size));
+	//int scale = 2;
+	//dc->Scale(scale);
+//	dc1.Scale(scale);
+//dc2.Scale(scale);
+	//dc3.Scale(scale);
+	//dc->Render(gfx);
+	//dc1.Render(gfx);
+	//dc2.Render(gfx);
+//	dc3.Render(gfx);
 	
 }

@@ -77,6 +77,12 @@ public:
 		right *= scale_x;
 		top *= scale_y;
 		bottom *= scale_y;
+		if (scale_y < 0) {
+			std::swap(top, bottom);
+		}
+		if (scale_x < 0) {
+			std::swap(left, right);
+		}
 	}
 };
 

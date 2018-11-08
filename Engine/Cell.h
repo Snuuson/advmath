@@ -7,7 +7,11 @@ public:
 
 	Vec2 pos={0,0};
 	int size=10;
-	DrawableCell GetDrawableCell();
+	DrawableCell* GetDrawableCell();
+	void MoveBy(Vec2 offset);
+	void MoveTo(Vec2 newPos);
+
+	Cell(Vec2 pos,int size);
 	Cell();
 	~Cell();
 };

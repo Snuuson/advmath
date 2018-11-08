@@ -59,6 +59,7 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void FillRect(const Rect<float>& rect);
+	Rect<float> GetScreenRect();
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

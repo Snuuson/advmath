@@ -16,9 +16,14 @@ public:
 	void Translate(Vec2 pos);
 	void Render(Graphics& gfx) 
 	{
-		rect->MoveBy(translation);
 		rect->Scale(scaleX, scaleY);
-		gfx.FillRect(*rect);
+		rect->MoveBy(translation);
+		
+		
+		if (rect->IsOverlappingWith(gfx.GetScreenRect())) {
+			gfx.FillRect(rect->GetExpanded(-1));
+		}
+		
 	}
 	~DrawableCell();
 };

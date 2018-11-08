@@ -316,15 +316,26 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
-void Graphics::FillRect(const Rect<float>& rect)
+void Graphics::FillRect(const Rect<float>& _rect)
 {
-	
+	Rect rect = _rect;
+	if (rect.bottom < rect.top) {
+		std::swap(rect.bottom, rect.top);
+	}
+	if (rect.right < rect.left) {
+		std::swap(rect.left, rect.right);
+	}
 	for (int y = rect.top; y <= rect.bottom;y++) {
 		for (int x = rect.left; x <= rect.right;x++) {
 			if (x >= 0 && x < ScreenWidth && y >= 0 && y < ScreenHeight)
 				PutPixel(x, y,Colors::Cyan);
 		}
 	}
+}
+
+Rect<float> Graphics::GetScreenRect()
+{
+	return Rect<float>(0.0f,(float)ScreenWidth,0.0f,(float)ScreenHeight);
 }
 
 

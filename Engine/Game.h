@@ -25,6 +25,8 @@
 #include "Graphics.h"
 #include "Cell.h"
 #include "DrawableCell.h"
+#include "CoordinateTransformer.h"
+#include <vector>
 
 class Game
 {
@@ -43,6 +45,8 @@ private:
 	MainWindow& wnd;
 	Graphics gfx;
 	Cell cell0;
+	CoordinateTransformer ct;
+	std::vector<DrawableCell*> allCells;
 	
 	/********************************/
 	/*  User Variables              */
