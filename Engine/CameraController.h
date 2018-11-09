@@ -5,14 +5,16 @@
 #include "MainWindow.h"
 class CameraController
 {
-public:
+private:
+	bool engadged = false;
 	Mouse& mouse;
 	Vec2 startingPos;
 	Vec2 currentCamPos;
 	Camera& cam;
-	bool engadged = false;
+public:
 	CameraController(MainWindow & w, Camera& cam);
-	void Update(float dt);
 	~CameraController();
+	void Update();
+	
 };
 

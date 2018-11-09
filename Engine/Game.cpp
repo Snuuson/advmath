@@ -30,100 +30,142 @@ Game::Game( MainWindow& wnd )
 	cam(ct),
 	camContrl(wnd,cam)
 {
-	cam.Scale(1);
-	cam.MoveTo(Vec2(-100, -100));
-	cell1.ChangeColor(Colors::Magenta);
-	for (int i = 0; i < 1000; i++) {
-		movingCells.emplace_back(new Cell({25,25},10));
+	//Zoom out
+	cam.Scale(0.5);
+
+	//Center Camera
+	cam.MoveTo(Vec2(-150,-150));
+	
+	//Initalize Cell-Colletions
+	int CellCount = 500;
+	for (int i = 0; i < CellCount; i++) {
+		movingCells.emplace_back(new Cell({ 50,50 },10));
+		movingCells1.emplace_back(new Cell({ 0,0 }, 10));
 	}
+
+	//Choose Color for movingCells
 	for each (Cell* c in movingCells)
 	{
-		int min = 0;
-		int max = 255;
-		int r = rand() % (max - min + 1) + min;
-		int g = rand() % (max - min + 1) + min;
-		int b = rand() % (max - min + 1) + min;
-		Color col = Color(r, g, b);
-		c->ChangeColor(col);
+		c->SetColor(Colors::White);
+		c->SetStoredColor(Colors::White);
+
 	}
+	//Choose Color for movingCells1
+	for each (Cell* c in movingCells1)
+	{
+		c->SetColor(Colors::Green);
+		c->SetStoredColor( Colors::Green );
+
+	}
+	
 	
 	
 }
 
+
+
 void Game::Go()
 {
-	gfx.BeginFrame();	
-	UpdateModel();
-	ComposeFrame();
-	gfx.EndFrame();
+		gfx.BeginFrame();
+		UpdateModel();
+		ComposeFrame();
+		gfx.EndFrame();
 }
 
 void Game::UpdateModel()
 {
-	camContrl.Update(0.0f);
+
+	camContrl.Update();
+
+	//Update Cells
 	float dt = ft.Mark();
 	for each (Cell* c in movingCells)
 	{
-		c->Update(dt);
+		c->Update1(dt);
 	}
+	dt += ft.Mark();
+	for each (Cell* c in movingCells1)
+	{
+		c->Update1(dt);
+	}
+
+	//Reset the Game with UP-Key
+	if (wnd.kbd.KeyIsPressed(VK_UP)) {
+		for each (Cell* c in movingCells) 
+		{
+			c->SetSpeed(1);
+			c->MoveTo(Vec2( 50,50)) ;
+			c->SetColor(Colors::White);
+		}
+		for each (Cell* c in movingCells1)
+		{
+			c->SetSpeed(1);
+			c->MoveTo(Vec2(0, 0));
+			c->SetColor(Colors::Green);
+		}
+	}
+}
+
+Color Game::CreateRandomColor()
+{
+	int min = 0;
+	int max = 255;
+	int r = rand() % (max - min + 1) + min;
+	int g = rand() % (max - min + 1) + min;
+	int b = rand() % (max - min + 1) + min;
+	Color col = Color(r, g, b);
+	return col;
 }
 
 void Game::ComposeFrame()
 {
 
-	//TODO asdsalkdasdksad
 	
 	
-	allCells.clear();
+	//Clear DrawableVectors
+	
 	movingCellsDrawables.clear();
+	movingCellsDrawables0.clear();
+
+	//Fill DrawableVectors
 	for each (Cell* c in movingCells)
 	{
 		movingCellsDrawables.emplace_back(c->GetDrawableCell());
 	}
-	for (float i = 0; i < 50; i++) {
-		for (float j = 0; j < 50; j++) {
-			cell0.MoveTo(Vec2(i, j));
-			int min = 0;
-			int max = 255;
-			int r = rand() % (max - min + 1) + min;
-			int g = rand() % (max - min + 1) + min;
-			int b = rand() % (max - min + 1) + min;
-			Color c = Color(r, g, b);
-			cell0.ChangeColor(c);
-			allCells.emplace_back(cell0.GetDrawableCell());
+	for each (Cell* c in movingCells1)
+	{
+		movingCellsDrawables0.emplace_back(c->GetDrawableCell());
+	}
+
+	
+	//CollisionCheck
+	for each (Cell* c in movingCells)
+	{
+		for each(Cell* c1 in movingCells1) {
+			if (c->GetPos() == c1->GetPos()) {
+
+				//Assign the same random Color to collided Cells
+				Color col = CreateRandomColor();
+				
+				c->SetColor(col);
+				c->SetStoredColor(col);
+
+				c1->SetColor(col);
+				c1->SetStoredColor(col);
+
+			}
 		}
 	}
 	
 	
 	
 	
-	
-	cam.Do(allCells);
+	//Push into Pipeline
 	cam.Do(movingCellsDrawables);
+	cam.Do(movingCellsDrawables0);
 	
 	
 
 
-	//gfx.PutPixel(gfx.ScreenWidth / 2, gfx.ScreenHeight/2, Colors::White);
-
-	
-
-
-	//DrawableCell dc1 = cell0.GetDrawableCell();
-	//DrawableCell dc2 = cell0.GetDrawableCell();
-	//DrawableCell dc3 = cell0.GetDrawableCell();
-	//dc->Translate(Vec2(0*cell0.size, 0 * cell0.size));
-	//dc1.Translate(Vec2(1 * cell0.size,1 * cell0.size));
-	//dc2.Translate(Vec2(2 * cell0.size, 2 * cell0.size));
-	//dc3.Translate(Vec2(3 * cell0.size, 3 * cell0.size));
-	//int scale = 2;
-	//dc->Scale(scale);
-//	dc1.Scale(scale);
-//dc2.Scale(scale);
-	//dc3.Scale(scale);
-	//dc->Render(gfx);
-	//dc1.Render(gfx);
-	//dc2.Render(gfx);
-//	dc3.Render(gfx);
 	
 }

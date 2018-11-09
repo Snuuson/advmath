@@ -44,6 +44,16 @@ void DrawableCell::ChangeColor(Color c)
 	this->c = c;
 }
 
+void DrawableCell::Render(Graphics & gfx)
+{
+	rect->Scale(scaleX, scaleY);
+	rect->MoveBy(translation);
+
+
+	if (rect->IsOverlappingWith(gfx.GetScreenRect())) {
+		gfx.FillRect(rect->GetExpanded(-1), c);
+	}
+}
 
 DrawableCell::~DrawableCell()
 {

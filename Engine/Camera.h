@@ -5,15 +5,20 @@
 #include "CoordinateTransformer.h"
 class Camera
 {
-public:
-	Vec2 pos = {0,0};
+private:
 	float scale = 1;
+	Vec2 pos = { 0,0 };
 	CoordinateTransformer& ct;
+public:
+	Camera(CoordinateTransformer& ct);
+	~Camera();
 	void MoveTo(Vec2 newPos);
 	void MoveBy(Vec2 offset);
 	void Scale(float _scale);
-	Camera(CoordinateTransformer& ct);
+	void SetPos(Vec2 newPos);
+	Vec2 GetPos();
 	void Do(std::vector<DrawableCell*> allCells);
-	~Camera();
+	
+	
 };
 

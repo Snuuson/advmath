@@ -19,6 +19,16 @@ void Camera::Scale(float _scale)
 	scale *= _scale;
 }
 
+void Camera::SetPos(Vec2 newPos)
+{
+	pos = newPos;
+}
+
+Vec2 Camera::GetPos()
+{
+	return pos;
+}
+
 Camera::Camera(CoordinateTransformer& ct)
 	:
 	ct(ct)

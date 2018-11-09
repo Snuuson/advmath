@@ -10,7 +10,6 @@ CoordinateTransformer::CoordinateTransformer(Graphics& gfx)
 	
 }
 
-
 void CoordinateTransformer::Do(DrawableCell * dc)
 {
 	dc->ScaleIndependent(1.0f, -1.0f);

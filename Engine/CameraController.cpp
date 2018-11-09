@@ -1,10 +1,6 @@
 #include "CameraController.h"
 
 
-
-
-
-
 CameraController::CameraController(MainWindow & w, Camera& cam)
 	:
 	mouse(w.mouse),
@@ -13,12 +9,18 @@ CameraController::CameraController(MainWindow & w, Camera& cam)
 	
 }
 
-void CameraController::Update(float dt)
+CameraController::~CameraController()
 {
+}
+
+void CameraController::Update()
+{
+
+	//Mouse Drag-Navigation
 	if (mouse.LeftIsPressed()) {
 		if (engadged == false) {
-			startingPos.x = mouse.GetPosX();
-			startingPos.y = mouse.GetPosY();
+			startingPos.x = (float)mouse.GetPosX();
+			startingPos.y = (float)mouse.GetPosY();
 			engadged = true;
 		}
 		else {
@@ -29,10 +31,12 @@ void CameraController::Update(float dt)
 	}
 	else {
 		engadged = false;
-		currentCamPos = cam.pos;
+		currentCamPos = cam.GetPos();
 		
 		
 	}
+
+	//Zoom
 	Mouse::Event e = mouse.Read();
 	if (e.IsValid()) {
 		switch (e.GetType())
@@ -54,6 +58,4 @@ void CameraController::Update(float dt)
 
 }
 
-CameraController::~CameraController()
-{
-}
+

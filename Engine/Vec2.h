@@ -119,6 +119,7 @@ public:
 	{
 		return !(*this == rhs);
 	}
+	
 public:
 	T x;
 	T y;
@@ -127,3 +128,5 @@ public:
 typedef _Vec2<float> Vec2;
 typedef _Vec2<double> Ved2;
 typedef _Vec2<int> Vei2;
+
+

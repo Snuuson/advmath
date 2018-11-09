@@ -44,21 +44,27 @@ private:
 	/********************************/
 	/*  User Functions              */
 	/********************************/
+	Color CreateRandomColor();
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Cell cell0;
-	CoordinateTransformer ct;
-	std::vector<DrawableCell*> allCells;
-	Camera cam;
-	CameraController camContrl;
-	Cell cell1;
-	std::vector<DrawableCell*> movingCellsDrawables;
-	std::vector<Cell*> movingCells;
-	FrameTimer ft;
-
-	
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+
+	int frameCounter = 0;
+
+	CoordinateTransformer ct;
+	FrameTimer ft;
+	Camera cam;
+	CameraController camContrl;
+
+
+	std::vector<DrawableCell*> movingCellsDrawables;
+	std::vector<Cell*> movingCells;
+
+	std::vector<DrawableCell*> movingCellsDrawables0;
+	std::vector<Cell*> movingCells1;
+	
+	
 };
