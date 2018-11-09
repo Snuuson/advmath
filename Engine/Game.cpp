@@ -37,9 +37,9 @@ Game::Game( MainWindow& wnd )
 	cam.MoveTo(Vec2(-150,-150));
 	
 	//Initalize Cell-Colletions
-	int CellCount = 500;
+	
 	for (int i = 0; i < CellCount; i++) {
-		movingCells.emplace_back(new Cell({ 50,50 },10));
+		movingCells.emplace_back(new Cell({ 10,10 },10));
 		movingCells1.emplace_back(new Cell({ 0,0 }, 10));
 	}
 

@@ -53,6 +53,7 @@ private:
 	/********************************/
 
 	int frameCounter = 0;
+	int CellCount = 50;
 
 	CoordinateTransformer ct;
 	FrameTimer ft;

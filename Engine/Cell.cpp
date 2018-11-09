@@ -39,8 +39,8 @@ void Cell::SetStoredColor(Color c)
 
 void Cell::Update(float dt)
 {
-	int min = -1;
-	int max = 1;
+	int min = -2;
+	int max = 2;
 	dir.x = rand() % (max - min + 1) + min;
 	dir.y = rand() % (max - min + 1) + min;
 	savedTime += dt;
